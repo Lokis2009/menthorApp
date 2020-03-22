@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DataServiceService} from '../data-service.service';
 
 @Component({
   selector: 'app-userlist',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./userlist.component.scss']
 })
 export class UserlistComponent implements OnInit {
+  public userList;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private dataSource: DataServiceService) {
   }
 
+  ngOnInit() {
+    this.dataSource.getUserList().subscribe((userlist) => {
+        this.userList = userlist;
+      }
+    );
+  }
 }
