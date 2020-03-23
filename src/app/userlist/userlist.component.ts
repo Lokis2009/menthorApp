@@ -8,7 +8,7 @@ import {DataServiceService} from '../data-service.service';
 })
 export class UserlistComponent implements OnInit {
   public userList;
-
+  displayedColumns: string[] = ['position', 'name', 'weight'];
   constructor(private dataSource: DataServiceService) {
   }
 

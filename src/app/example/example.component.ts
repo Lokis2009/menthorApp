@@ -1,14 +1,17 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {Breakpoints, BreakpointObserver} from '@angular/cdk/layout';
+import {DataServiceService} from '../data-service.service';
 
 @Component({
   selector: 'app-example',
   templateUrl: './example.component.html',
   styleUrls: ['./example.component.scss']
 })
-export class ExampleComponent {
+export class ExampleComponent implements OnInit {
   /** Based on the screen size, switch from standard to one column per row */
+  public userList;
+  displayedColumns: string[] = ['position', 'name', 'weight'];
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({matches}) => {
       if (matches) {
@@ -29,6 +32,14 @@ export class ExampleComponent {
     })
   );
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver,
+              private dataSource: DataServiceService) {
+  }
+
+  ngOnInit() {
+    this.dataSource.getUserList().subscribe((userlist) => {
+        this.userList = userlist;
+      }
+    );
   }
 }
